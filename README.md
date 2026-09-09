@@ -6,6 +6,18 @@ Your phone buzzes, and keeps buzzing until you acknowledge, when Claude Code is 
 Claude Code session to one Mast channel. It needs no account, no token and no server: a channel
 URL from the app is the whole configuration.
 
+## Requirements
+
+- **The Mast Pager app** on an iPhone, from the
+  [App Store](https://apps.apple.com/us/app/mast-pager/id6805232044). It is a one-time purchase
+  of $4.99, not a subscription. Pages mirror to a paired Apple Watch.
+- **A channel** created in the app. The app hands you its URL; that URL is what the plugin sends
+  to, and it is the only secret involved.
+- `bash` and `curl` on the machine running Claude Code. `jq` is used when present.
+
+Without the app or a channel URL the plugin does nothing: every hook exits quietly and Claude Code
+runs as before.
+
 ## What it does
 
 | When | You get |
@@ -77,8 +89,6 @@ eight-second timeout: a failed page never stalls the agent.
 `GET <channel-url>/messages/<id>` until the state is `acked`. The channel key can read only its
 own messages, which is why no account is needed.
 
-Requirements: `bash`, `curl`. `jq` is used when present.
-
 ## Test the hook by hand
 
 ```bash
@@ -86,7 +96,22 @@ echo '{"hook_event_name":"Notification","notification_type":"permission_prompt",
   | MAST_DRY_RUN=1 bash scripts/notify.sh
 ```
 
-## Send fields and limits
+## On the phone
 
-Documented at https://tissue.systems/docs/mast/connect/. Title 250 characters, body 4096, 60
-sends a minute per key.
+A page from a blocked session looks like this on the lock screen, and repeats until acknowledged:
+
+```
+cell needs a permission
+Claude needs your permission to use Bash
+```
+
+Acknowledge it from the notification, from the app, or from the Watch. A second permission
+prompt from the same session folds into the card already on the phone instead of stacking.
+
+## Links
+
+- Mast: https://tissue.systems/mast
+- Mast Pager on the App Store: https://apps.apple.com/us/app/mast-pager/id6805232044
+- Sending to a channel, all fields and limits: https://tissue.systems/docs/mast/connect/
+  (title 250 characters, body 4096, 60 sends a minute per channel)
+- Which priority to use for what: https://tissue.systems/mast/guide
