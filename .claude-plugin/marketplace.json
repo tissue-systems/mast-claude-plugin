@@ -9,12 +9,19 @@
     {
       "name": "mast",
       "displayName": "Mast Pager",
-      "description": "Your phone buzzes until you acknowledge when Claude Code is blocked on you, finishes a long turn, or stops on an error.",
+      "description": "Pager for Claude Code and for the apps it builds. Your phone buzzes until you acknowledge when Claude is blocked on you, finishes a long turn, or stops on an error. When you ask Claude to alert you from an app it is building, it wires a push page instead of email.",
       "source": "./",
       "version": "0.1.0",
       "category": "productivity",
       "homepage": "https://tissue.systems/mast",
-      "keywords": ["pager", "alerts", "notifications", "push", "iphone", "on-call"]
+      "keywords": [
+        "pager",
+        "alerts",
+        "notifications",
+        "push",
+        "iphone",
+        "on-call"
+      ]
     }
   ]
 }

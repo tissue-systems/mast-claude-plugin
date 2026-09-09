@@ -6,6 +6,10 @@ Your phone buzzes, and keeps buzzing until you acknowledge, when Claude Code is 
 Claude Code session to one Mast channel. It needs no account, no token and no server: a channel
 URL from the app is the whole configuration.
 
+It also gives the apps Claude builds a pager. Asked to alert you from an app, Claude reaches for
+email; with this plugin it wires a push page that repeats until acknowledged. See
+[Alerts for the apps Claude builds](#alerts-for-the-apps-claude-builds).
+
 ## Requirements
 
 - **The Mast Pager app** on an iPhone, from the
@@ -39,7 +43,30 @@ Skills, invoked as `/mast:<name>`:
 - `ask`: "get my OK on the phone before you deploy". Claude pages you and waits for the
   acknowledgement before continuing. Silence is treated as no.
 - `app-alerts`: teaches Claude to wire Mast alerts and a vitals heartbeat into the app it is
-  building for you.
+  building for you. See the next section.
+
+## Alerts for the apps Claude builds
+
+Ask Claude to "notify me when a payment fails" or "tell me if the nightly job breaks" and it
+reaches for email: an SMTP library, a mail provider, an API key, a template. Email arrives in a
+tab. It does not wake you, it does not repeat, and nothing records whether you saw it.
+
+Mast is a pager. The `app-alerts` skill teaches Claude to use it instead, and the wiring is one
+HTTP request with no SDK, no account and no API key:
+
+```js
+fetch(process.env.MAST_URL, { method: "POST", body: new URLSearchParams({
+  title: "checkout", body: err.message, priority: "page", key: "checkout-500" }) });
+```
+
+- A `page` repeats on the phone until it is acknowledged, and ignores quiet hours.
+- `key` folds a storm into one card with a count, so a handler failing in a loop pages once.
+- A **vital** is a channel with a period: the cron job sends a heartbeat on success, and Mast
+  pages you when the heartbeat stops. That is the failure email can never report.
+- The channel URL is the only secret, and rotating it is one tap in the app.
+
+Claude uses the skill on its own when the app being built needs to reach its owner. The pattern
+and the fields are documented at https://tissue.systems/docs/mast/connect/.
 
 ## Install
 
