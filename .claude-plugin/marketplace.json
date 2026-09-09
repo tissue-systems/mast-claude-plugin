@@ -1,0 +1,20 @@
+{
+  "name": "mast",
+  "description": "Mast Pager for Claude Code",
+  "owner": {
+    "name": "Tissue Systems",
+    "url": "https://tissue.systems"
+  },
+  "plugins": [
+    {
+      "name": "mast",
+      "displayName": "Mast Pager",
+      "description": "Your phone buzzes until you acknowledge when Claude Code is blocked on you, finishes a long turn, or stops on an error.",
+      "source": "./",
+      "version": "0.1.0",
+      "category": "productivity",
+      "homepage": "https://tissue.systems/mast",
+      "keywords": ["pager", "alerts", "notifications", "push", "iphone", "on-call"]
+    }
+  ]
+}

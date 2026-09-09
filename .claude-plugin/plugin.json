@@ -1,0 +1,31 @@
+{
+  "name": "mast",
+  "displayName": "Mast Pager",
+  "version": "0.1.0",
+  "description": "Your phone buzzes until you acknowledge when Claude Code is blocked on you, finishes a long turn, or stops on an error. Also lets Claude page you on request, wait for your acknowledgement before continuing, and wire pager alerts into the apps it builds.",
+  "author": {
+    "name": "Tissue Systems",
+    "url": "https://tissue.systems"
+  },
+  "homepage": "https://tissue.systems/mast",
+  "repository": "https://github.com/tissue-systems/mast-claude-plugin",
+  "keywords": [
+    "pager",
+    "alerts",
+    "notifications",
+    "push",
+    "iphone",
+    "on-call",
+    "mast"
+  ],
+  "userConfig": {
+    "channel_url": {
+      "type": "string",
+      "title": "Mast channel URL",
+      "description": "The send URL of a channel from the Mast app (https://mast.tissue.dev/mk_\u2026). Environment variable MAST_CHANNEL_URL and ~/.config/mast/channel work too.",
+      "sensitive": true,
+      "required": false
+    }
+  },
+  "license": "MIT"
+}
