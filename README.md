@@ -13,7 +13,7 @@ email; with this plugin it wires a push page that repeats until acknowledged. Se
 ## Requirements
 
 - **The Mast Pager app** on an iPhone, from the
-  [App Store](https://apps.apple.com/us/app/mast-pager/id6805232044). It is a one-time purchase
+  [App Store](https://apps.apple.com/us/app/mast-pager/id6805232044?pt=129362925&ct=plugin-claude&mt=8). It is a one-time purchase
   of $4.99, not a subscription. Pages mirror to a paired Apple Watch.
 - **A channel** created in the app. The app hands you its URL; that URL is what the plugin sends
   to, and it is the only secret involved.
@@ -138,7 +138,7 @@ prompt from the same session folds into the card already on the phone instead of
 ## Links
 
 - Mast: https://tissue.systems/mast
-- Mast Pager on the App Store: https://apps.apple.com/us/app/mast-pager/id6805232044
+- Mast Pager on the App Store: https://apps.apple.com/us/app/mast-pager/id6805232044?pt=129362925&ct=plugin-claude&mt=8
 - Sending to a channel, all fields and limits: https://tissue.systems/docs/mast/connect/
   (title 250 characters, body 4096, 60 sends a minute per channel)
 - Which priority to use for what: https://tissue.systems/mast/guide
