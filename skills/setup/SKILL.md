@@ -14,7 +14,7 @@ allowed-tools:
 
 # Set up the Mast pager
 
-Mast is an iPhone and Apple Watch pager app. A channel URL is a send credential:
+Mast is a pager app for iPhone, Apple Watch and Android. A channel URL is a send credential:
 anything that can POST to it can make the owner's phone buzz. This plugin needs one such URL.
 
 ## Steps
@@ -23,7 +23,9 @@ anything that can POST to it can make the owner's phone buzz. This plugin needs 
    skip to step 4.
 
 2. Ask the user for a channel URL, and tell them how to get one if they do not have it:
-   - Install Mast Pager from the App Store (https://apps.apple.com/us/app/mast-pager/id6805232044?pt=129362925&ct=plugin-claude&mt=8).
+   - Install Mast Pager, which is free: from the App Store on an iPhone
+     (https://apps.apple.com/us/app/mast-pager/id6805232044?pt=129362925&ct=plugin-claude&mt=8),
+     or from Google Play on Android (https://play.google.com/store/apps/details?id=systems.tissue.mast).
    - In the app, create a channel named for this machine or for Claude Code, and copy its URL.
      It looks like `https://mast.tissue.dev/mk_…`. A bare `mk_…` key is accepted as well.
    - **Raise the channel's ceiling to `page` in the app** (channel settings). Every new channel

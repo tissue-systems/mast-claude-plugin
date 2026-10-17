@@ -20,6 +20,7 @@
         "notifications",
         "push",
         "iphone",
+        "android",
         "on-call"
       ]
     }
