@@ -29,6 +29,8 @@ while [[ $# -gt 0 ]]; do
     *) echo "unknown argument: $1" >&2; exit 2 ;;
   esac
 done
+[[ "$timeout" =~ ^[0-9]{1,6}$ ]] || { echo "--timeout takes whole seconds" >&2; exit 2; }
+[[ "$poll" =~ ^[0-9]{1,4}$ && "$poll" -gt 0 ]] || { echo "--poll takes whole seconds" >&2; exit 2; }
 [[ -n "$title$body" ]] || { echo "usage: mast-ask.sh TITLE BODY [--timeout SECS] [--priority P]" >&2; exit 2; }
 
 url="$(mast_channel_url)" || { echo "No mast channel configured. Run /mast:setup." >&2; exit 6; }

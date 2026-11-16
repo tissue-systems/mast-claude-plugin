@@ -47,11 +47,14 @@ esac
 
 url="$(mast_channel_url "$cwd")" || exit 0   # not configured: silently do nothing
 
-# Settings (env wins, then .claude/mast.local.md, then the default).
+# Settings: env wins, then ~/.config/mast/settings.md, then the project's
+# .claude/mast.local.md, then the default. A value that isn't legal for its
+# key falls back to the default instead of reaching the arithmetic below.
 setting() {  # setting <ENV_NAME> <yaml_key> <default>
   local v="${!1:-}"
   [[ -n "$v" ]] || v="$(mast_setting "$2" "$cwd")"
-  printf '%s' "${v:-$3}"
+  mast_valid_setting "$2" "$v" || v="$3"
+  printf '%s' "$v"
 }
 on_stop="$(setting MAST_ON_STOP on_stop true)"
 stop_min="$(setting MAST_STOP_MIN_SECS stop_min_secs 120)"
@@ -92,7 +95,9 @@ case "$event" in
     [[ "$(field stop_hook_active)" == "true" ]] && exit 0
     if [[ -f "$stamp" ]]; then
       started="$(cat "$stamp" 2>/dev/null || echo 0)"
-      elapsed=$(( $(date +%s) - ${started:-0} ))
+      # The stamp sits in a shared temp dir; anything but digits is not ours.
+      [[ "$started" =~ ^[0-9]{1,12}$ ]] || exit 0
+      elapsed=$(( $(date +%s) - started ))
       (( elapsed >= stop_min )) || exit 0
     else
       # No stamp: an older session, or the stamp dir is unwritable. Without a

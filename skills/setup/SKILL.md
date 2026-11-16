@@ -38,13 +38,14 @@ anything that can POST to it can make the owner's phone buzz. This plugin needs 
      project on this machine pages the same channel; the card's title names the project.
    - **Per project:** write `.claude/mast.local.md` in the project root with YAML frontmatter
      `channel_url: https://mast.tissue.dev/mk_…`. Confirm `.claude/*.local.md` is in the
-     project's `.gitignore` before writing, and add it if not. This wins over the per-machine file.
+     project's `.gitignore` before writing, and add it if not. The hooks ignore this file
+     while git tracks it, and it is read only when no per-machine file is set.
    - **Environment:** `MAST_CHANNEL_URL` in the shell, or in the `env` block of
      `~/.claude/settings.json`. This wins over both files.
    Never write the URL into a file that is committed.
 
-4. Optional settings, all in the same `.claude/mast.local.md` frontmatter or as environment
-   variables. Mention them; do not set them unless asked.
+4. Optional settings, as frontmatter in `~/.config/mast/settings.md` (wins) or
+   `.claude/mast.local.md`, or as environment variables. Mention them; do not set them unless asked.
 
    | Setting | Env | Default | Meaning |
    |---|---|---|---|

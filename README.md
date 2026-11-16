@@ -85,13 +85,20 @@ The channel URL is read from, in order:
 1. `MAST_CHANNEL_URL` in the environment (or the `env` block of `~/.claude/settings.json`)
 2. The `channel_url` plugin option Claude Code asks for at install time. This reaches the hooks
    only, not the `/mast:*` skills, so also set one of the sources below.
-3. `channel_url:` in the frontmatter of `.claude/mast.local.md` in the project (per project)
-4. `~/.config/mast/channel`, a file holding the URL (per machine)
+3. `~/.config/mast/channel`, a file holding the URL (per machine)
+4. `channel_url:` in the frontmatter of `~/.config/mast/settings.md`, then of
+   `.claude/mast.local.md` in the project (per project)
 
 A full URL (`https://mast.tissue.dev/mk_…`) or a bare `mk_…` key both work. The URL is a
-send credential: keep it out of git.
+send credential: keep it out of git. A `.claude/mast.local.md` that git tracks is ignored
+completely: it came with the repository, and a repository you cloned shouldn't decide where
+your session text goes. A channel URL on any host other than `mast.tissue.dev` is refused
+unless you list that host in `MAST_ALLOWED_HOSTS` or in `~/.config/mast/allowed_hosts`.
 
-Optional, as frontmatter keys in `.claude/mast.local.md` or as environment variables:
+Optional, as frontmatter keys in `~/.config/mast/settings.md` (wins) or
+`.claude/mast.local.md`, or as environment variables (win over both). A value that isn't
+valid for its key, such as a `stop_min_secs` that isn't a whole number, falls back to the
+default:
 
 | Frontmatter | Environment | Default | |
 |---|---|---|---|
