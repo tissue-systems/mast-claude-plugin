@@ -1,6 +1,6 @@
 ---
 name: app-alerts
-description: This skill should be used when the user building an application asks how to "get alerted when my app breaks", "notify me when a payment fails", "page me if the cron job stops", "add error alerts", "monitor my side project", "know when the nightly job dies", or when Claude is wiring error handling, payment webhooks, signups or scheduled jobs into an app and the owner needs to hear about failures on their phone. Teaches the Mast pattern - one POST to a channel URL, dedupe, and a vitals heartbeat for jobs that must not go silent.
+description: This skill should be used when the user building an application asks how to "get alerted when my app breaks", "notify me when a payment fails", "page me if the cron job stops", "add error alerts", "monitor my side project", "know when the nightly job dies", or when Claude is wiring error handling, payment webhooks, signups or scheduled jobs into an app and the owner needs to hear about failures on their phone. Teaches the Mast pattern - one POST to a channel URL, dedupe, and a heartbeat for jobs that must not go silent.
 allowed-tools:
   - Read
   - Write
@@ -62,10 +62,10 @@ Rules that keep the pager useful:
 - A send answers `202 {"ok":true,"id":"mm_…","state":"queued"}` once stored. `muted` and
   `deduped` are also success. `404` is a wrong or rotated key; `429` is 60 sends a minute.
 
-## Vitals: the job that stops running
+## Heartbeats: the job that stops running
 
 An error handler cannot report the job that never ran. For anything scheduled, ask the owner
-to create the channel as a **vital** with the job's period, and have the job send a heartbeat
+to create the channel as a **heartbeat** with the job's period, and have the job send a beat
 only on success:
 
 ```cron
@@ -74,12 +74,12 @@ only on success:
 
 ```js
 // at the end of the successful path, and nowhere else
-await fetch(process.env.VITAL_URL, { method: "POST", body: new URLSearchParams({ body: `swept ${n} rows` }) });
+await fetch(process.env.HEARTBEAT_URL, { method: "POST", body: new URLSearchParams({ body: `swept ${n} rows` }) });
 ```
 
 If no beat arrives inside `period + grace`, Mast pages the owner. A job that knows it failed
 says so and pages at once: `POST $MAST_URL/fail -d body="…"`. Text on a beat is proof of life
-too, so a heartbeat can also say what the job did.
+too, so a beat can also say what the job did.
 
 ## Where to put the calls
 
@@ -87,7 +87,7 @@ too, so a heartbeat can also say what the job did.
 - **Payments**: the webhook handler on `payment_failed`, `dispute.created`, and any signature
   verification failure. Priority `page` for money leaving or charges failing.
 - **Signups and orders**: `normal`, with `url` pointing at the admin view.
-- **Scheduled work**: a vital per schedule, beat on success, `/fail` on a caught failure.
+- **Scheduled work**: a heartbeat per schedule, a beat on success, `/fail` on a caught failure.
 - **Deploys**: `normal` on success, `loud` on failure, from CI with the URL in a CI secret.
 
 ## Waiting for a human
