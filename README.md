@@ -42,7 +42,7 @@ Skills, invoked as `/mast:<name>`:
 - `page`: "page me when the build is done". Claude sends one message on your behalf.
 - `ask`: "get my OK on the phone before you deploy". Claude pages you and waits for the
   acknowledgement before continuing. Silence is treated as no.
-- `app-alerts`: teaches Claude to wire Mast alerts and a vitals heartbeat into the app it is
+- `app-alerts`: teaches Claude to wire Mast alerts and a heartbeat into the app it is
   building for you. See the next section.
 
 ## Alerts for the apps Claude builds
@@ -61,8 +61,8 @@ fetch(process.env.MAST_URL, { method: "POST", body: new URLSearchParams({
 
 - A `page` repeats on the phone until it is acknowledged, and ignores quiet hours.
 - `key` folds a storm into one card with a count, so a handler failing in a loop pages once.
-- A **vital** is a channel with a period: the cron job sends a heartbeat on success, and Mast
-  pages you when the heartbeat stops. That is the failure email can never report.
+- A **heartbeat** is a channel with a period: the cron job sends a beat on success, and Mast
+  pages you when the beats stop. That is the failure email can never report.
 - The channel URL is the only secret, and rotating it is one tap in the app.
 
 Claude uses the skill on its own when the app being built needs to reach its owner. The pattern
